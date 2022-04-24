@@ -1,0 +1,11 @@
+name: Deploy to exoscale
+on: [push]
+jobs:
+  deploy:
+    runs-on: hashicorp/terraform:light
+    steps:
+      - run: terraform init
+      - run: terraform apply -auto-approve -var exoscale_api_key=$EXOSCALE_API_KEY -var exoscale_api_secret=$EXOSCALE_API_SECRET
+        env:
+          EXOSCALE_API_SECRET: ${{ secrets.EXOSCALE_API_SECRET }}
+          EXOSCALE_API_KEY: ${{ secrets.EXOSCALE_API_KEY }}
