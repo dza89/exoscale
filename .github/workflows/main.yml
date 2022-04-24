@@ -1,9 +1,12 @@
 name: Deploy to exoscale
-on: [push]
+on: 
+  push:
+    branches: [ main ]
 jobs:
   deploy:
-    runs-on: hashicorp/terraform:light
+    runs-on: ubuntu-latest
     steps:
+      - uses: hashicorp/setup-terraform@v2
       - run: terraform init
       - run: terraform apply -auto-approve -var exoscale_api_key=$EXOSCALE_API_KEY -var exoscale_api_secret=$EXOSCALE_API_SECRET
         env:
